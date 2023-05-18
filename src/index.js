@@ -8,4 +8,6 @@ const gitManager = new GitManager(process.cwd());
 
 watcher.onChange((path) => {
   console.log(`New changes detected at: ${path}`);
+
+  gitManager.commitAndPush();
 });
