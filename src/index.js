@@ -1,12 +1,11 @@
-const chokidar = require("chokidar");
+const DirectoryWatcher = require("./DirectoryWatcher");
+const GitManager = require("./GitManager");
 
-const projectPath = "C:/Users/DEll/Desktop/Kenneth/SearchingLightProject";
+const watcher = new DirectoryWatcher(
+  "C:/Users/DEll/Desktop/Kenneth/SearchingLightProject"
+);
+const gitManager = new GitManager(process.cwd());
 
-const watcher = chokidar.watch(projectPath, {
-  ignored: /(^|[\/\\])\../,
-  persistent: true,
-});
-
-watcher.on("change", (path) => {
+watcher.onChange((path) => {
   console.log(`New changes detected at: ${path}`);
 });
