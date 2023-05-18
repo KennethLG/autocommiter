@@ -6,6 +6,6 @@ const gitManager = new GitManager(projectPath);
 
 setInterval(() => {
   gitManager.checkForChanges();
-}, 5000);
+}, 3000);
 
 console.log("AutoCommiter started successfully!");

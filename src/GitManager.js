@@ -1,36 +1,27 @@
-const fs = require("fs");
 const git = require("simple-git");
-const { spawn } = require("child_process");
 
 class GitManager {
   constructor(dir) {
     this.git = git(dir);
-    this.dir = dir;
-    this.lastModified = this.getLatestModTime(dir);
   }
 
-  getLatestModTime(dir) {
-    const files = fs.readdirSync(dir);
-    return files
-      .map((file) => fs.statSync(dir + "/" + file).mtime.getTime())
-      .sort((a, b) => b - a)[0];
-  }
-
-  checkForChanges() {
-    const latest = this.getLatestModTime(this.dir);
-    if (this.lastModified < latest) {
-      this.lastModified = latest;
-      this.commitAndPush();
+  async checkForChanges() {
+    const diff = await this.git.diff();
+    if (diff) {
       console.log("Changes detected!");
-    } else {
-      console.log("No changes detected");
+      this.commitAndPush();
     }
   }
 
   async commitAndPush() {
     try {
       const diff = await this.git.diff(["--name-only"]);
+
+      console.log(diff);
+
       await this.git.add("./*");
+
+      console.log("staged changes");
 
       // Crear el mensaje de commit a partir de la lista de archivos
       const commitMessage = `Modified files: ${diff.split("\n").join(", ")}`;
