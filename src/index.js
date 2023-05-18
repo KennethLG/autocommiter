@@ -1,13 +1,11 @@
-const DirectoryWatcher = require("./DirectoryWatcher");
 const GitManager = require("./GitManager");
 
-const watcher = new DirectoryWatcher(
-  "C:/Users/DEll/Desktop/Kenneth/SearchingLightProject"
-);
-const gitManager = new GitManager(process.cwd());
+const projectPath = "C:/Users/DEll/Desktop/Kenneth/SearchingLightProject";
 
-watcher.onChange((path) => {
-  console.log(`New changes detected at: ${path}`);
+const gitManager = new GitManager(projectPath);
 
-  gitManager.commitAndPush();
-});
+setInterval(() => {
+  gitManager.checkForChanges();
+}, 5000);
+
+console.log("AutoCommiter started successfully!");
