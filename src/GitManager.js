@@ -21,6 +21,7 @@ class GitManager {
     if (this.lastModified < latest) {
       this.lastModified = latest;
       this.commitAndPush();
+      console.log("Changes detected!");
     } else {
       console.log("No changes detected");
     }
@@ -28,19 +29,18 @@ class GitManager {
 
   async commitAndPush() {
     try {
-      await this.git.add("./*");
-
-      // Obtener la lista de archivos modificados
       const diff = await this.git.diff(["--name-only"]);
+      await this.git.add("./*");
 
       // Crear el mensaje de commit a partir de la lista de archivos
       const commitMessage = `Modified files: ${diff.split("\n").join(", ")}`;
 
       // Hacer el commit con el mensaje creado
       await this.git.commit(commitMessage);
+      console.log("Changes commited successfully", commitMessage);
 
-      this.git.push("origin", "main");
-      console.log("Changes commited successfully");
+      await this.git.push("origin", "main");
+      console.log("Changes pushed");
     } catch (error) {
       console.error("An Error ocurred:", error);
     }
