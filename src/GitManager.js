@@ -15,18 +15,26 @@ class GitManager {
 
   async commitAndPush() {
     try {
-      const diff = await this.git.diff(["--name-only"]);
-
-      console.log(diff);
+      const statusSummary = await this.git.status();
+      const filesModified = statusSummary.modified;
+      const filesAdded = statusSummary.created;
+      const filesDeleted = statusSummary.deleted;
 
       await this.git.add("./*");
 
       console.log("staged changes");
 
-      // Crear el mensaje de commit a partir de la lista de archivos
-      const commitMessage = `Modified files: ${diff.split("\n").join(", ")}`;
+      let commitMessage = "";
+      if (filesAdded.length) {
+        commitMessage += `Added files: ${filesAdded.join(", ")}. `;
+      }
+      if (filesModified.length) {
+        commitMessage += `Modified files: ${filesModified.join(", ")}. `;
+      }
+      if (filesDeleted.length) {
+        commitMessage += `Deleted files: ${filesDeleted.join(", ")}. `;
+      }
 
-      // Hacer el commit con el mensaje creado
       await this.git.commit(commitMessage);
       console.log("Changes commited successfully", commitMessage);
 
