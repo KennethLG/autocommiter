@@ -1,3 +1,5 @@
+const git = require("simple-git");
+
 class GitManager {
   constructor(dir) {
     this.git = git(dir);
