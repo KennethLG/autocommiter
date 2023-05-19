@@ -1,12 +1,16 @@
 const GitManager = require("./GitManager");
 const config = require("./config");
 
-const projectPath = config.dir;
+const { dir, timeout } = config;
 
-const gitManager = new GitManager(projectPath);
+const gitManager = new GitManager(dir);
 
 setInterval(() => {
   gitManager.checkForChanges();
-}, config.timeout);
+}, timeout);
 
-console.log("AutoCommiter started successfully!");
+console.log(`
+AutoCommiter started sucessfully!
+Watching: ${dir}
+Timeout: ${timeout}
+`);
