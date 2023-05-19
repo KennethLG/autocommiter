@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "chokidar": "^3.5.3",
+    "dotenv": "^16.0.3",
     "simple-git": "^3.18.0"
   }
 }
