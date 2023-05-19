@@ -38,8 +38,10 @@ class GitManager {
       await this.git.commit(commitMessage);
       console.log("Changes commited successfully", commitMessage);
 
-      await this.git.push("origin", "main");
-      console.log("Changes pushed");
+      const currentBranch = await this.git.revparse(["--abbrev-ref", "HEAD"]);
+
+      await this.git.push("origin", currentBranch);
+      console.log("Changes pushed to", currentBranch);
     } catch (error) {
       console.error("An Error ocurred:", error);
     }

@@ -1,13 +1,12 @@
 const GitManager = require("./GitManager");
+const config = require("./config");
 
-const projectPath = "C:/Users/DEll/Desktop/Kenneth/SearchingLightProject";
+const projectPath = config.dir;
 
 const gitManager = new GitManager(projectPath);
 
-const time = 1000 * 60;
-
 setInterval(() => {
   gitManager.checkForChanges();
-}, time);
+}, config.timeout);
 
 console.log("AutoCommiter started successfully!");
