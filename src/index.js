@@ -3,14 +3,16 @@ const { program } = require("commander");
 const GitManager = require("./GitManager");
 
 program
-  .option('-t, --timeout <number>', 'set timeout', parseInt)
-  .parse(process.argv);
+  .option("-t, --timeout <number>")
+  .parse();
 
-const timeout = program.timeout || 10000;
+const options = program.opts();
+
+const timeout = parseInt(options.timeout) || 10000;
 const dir = process.cwd();
 
 if (isNaN(timeout)) {
-  console.error('Error: timeout must be a number');
+  console.error("Error: timeout must be a number");
   process.exit(1);
 }
 
