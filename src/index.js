@@ -6,7 +6,7 @@ program
   .option('-t, --timeout <number>', 'set timeout', parseInt)
   .parse(process.argv);
 
-const timeout = program.timeout;
+const timeout = program.timeout || 10000;
 
 if (isNaN(timeout)) {
   console.error('Error: timeout must be a number');
