@@ -1,6 +1,9 @@
 const { config } = require("dotenv");
+const path = require("path");
 
-config();
+config({
+  path: path.join(__dirname, ".env")
+});
 
 module.exports = {
   timeout: parseInt(process.env.TIMEOUT) || 1000,
