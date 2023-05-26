@@ -1,10 +1,19 @@
 #!/usr/bin/env node
+const { program } = require("commander");
 const GitManager = require("./GitManager");
-const config = require("./config");
 
-const { dir, timeout } = config;
+program
+  .option('-t, --timeout <number>', 'set timeout', parseInt)
+  .parse(process.argv);
 
-const gitManager = new GitManager(dir);
+const timeout = program.timeout;
+
+if (isNaN(timeout)) {
+  console.error('Error: timeout must be a number');
+  process.exit(1);
+}
+
+const gitManager = new GitManager(process.cwd());
 
 setInterval(() => {
   gitManager.checkForChanges();
