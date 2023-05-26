@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const GitManager = require("./GitManager");
 const config = require("./config");
 
