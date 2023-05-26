@@ -7,13 +7,14 @@ program
   .parse(process.argv);
 
 const timeout = program.timeout || 10000;
+const dir = process.cwd();
 
 if (isNaN(timeout)) {
   console.error('Error: timeout must be a number');
   process.exit(1);
 }
 
-const gitManager = new GitManager(process.cwd());
+const gitManager = new GitManager(dir);
 
 setInterval(() => {
   gitManager.checkForChanges();
